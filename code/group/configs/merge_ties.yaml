@@ -1,0 +1,55 @@
+# TIES merging config for the group model.
+#
+# TIES (Trim, Elect Sign, Merge) resolves conflicts between specialist models
+# by keeping only the parameters that changed most from base and resolving
+# sign disagreements by majority vote. Much better than naive averaging.
+#
+# Weights based on CI eval gaps (2026-05-25):
+#   safety       76% — already strong, lower weight to avoid dominating
+#   multilingual 45% — second best, moderate weight
+#   math         39% — significant gap, high weight
+#   knowledge    29% — biggest gap, highest weight
+#
+# density=0.5: keep top 50% of changed parameters per model.
+# Lower density → less interference. Raise to 0.7 if output is too close to base.
+#
+# Specialist models on HF: cs-552-2026-camykaz/merge_ties
+#   safety/ | general_knowledge/ | math/ | multilingual/
+#
+# To reproduce (see README Option F):
+#   python scripts/merge_ties.py --config configs/merge_ties.yaml \
+#       --safety_model     models/safety \
+#       --gk_model         models/general_knowledge \
+#       --ml_model         models/multilingual \
+#       --math_model       models/math \
+#       --output_dir       outputs/group_model_merged
+
+models:
+  - model: models/safety        # cs-552-2026-camykaz/merge_ties  →  safety/
+    parameters:
+      density: 0.5
+      weight: 0.20
+
+  - model: models/general_knowledge   # cs-552-2026-camykaz/merge_ties  →  general_knowledge/
+    parameters:
+      density: 0.5
+      weight: 0.30
+
+  - model: models/multilingual  # cs-552-2026-camykaz/merge_ties  →  multilingual/
+    parameters:
+      density: 0.5
+      weight: 0.25
+
+  - model: models/math          # cs-552-2026-camykaz/merge_ties  →  math/
+    parameters:
+      density: 0.5
+      weight: 0.25
+
+merge_method: ties
+base_model: Qwen/Qwen3-1.7B
+
+parameters:
+  normalize: true   # rescale so merged norms match base — prevents output collapse
+  int8_mask: true   # efficient sign election
+
+dtype: bfloat16

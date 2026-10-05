@@ -1,0 +1,45 @@
+model:
+  base_model: models/qwen3_safety_merged_dpo_v1
+  output_dir: models/qwen3_safety_dpo_v2b
+
+data:
+  train_path: data/safety_dpo_v2.jsonl
+  dev_path:
+
+training:
+  num_train_epochs: 1
+  learning_rate: 0.000001
+  per_device_train_batch_size: 1
+  gradient_accumulation_steps: 8
+  max_seq_length: 2048
+  warmup_ratio: 0.05
+  weight_decay: 0.01
+  logging_steps: 10
+  save_steps: 100
+  eval_steps: 100
+  seed: 42
+
+dpo:
+  beta: 0.1
+
+lora:
+  r: 16
+  alpha: 32
+  dropout: 0.05
+  target_modules:
+    - q_proj
+    - k_proj
+    - v_proj
+    - o_proj
+    - gate_proj
+    - up_proj
+    - down_proj
+
+wandb:
+  project: cs552-safety-model
+  entity: MNLP26
+  run_name: dpo-v2b-iterative-1ep-beta0.1-lr1e6
+  notes: >
+    DPO v2b: fixed hyperparams vs v2 collapse. 1 epoch (was 2), beta=0.1
+    (was 0.05), lr=1e-6 (was 3e-6). Same 1528 hard negatives. 
+    Base: qwen3_safety_merged_dpo_v1 (82.14%).

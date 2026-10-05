@@ -1,0 +1,44 @@
+{
+    "model": {
+        "base_model": "Qwen/Qwen3-1.7B",
+        "hf_merged_model": "cs-552-2026-camykaz/general_knowledge_model",
+        "hf_merged_subfolder": "",
+        "inject_system_prompt": true
+    },
+    "data": {
+        "hf_dataset_repo": "cyrineakrout/gk-models",
+        "hf_dataset_file": "datasets/sft_train_v12.jsonl",
+        "validation_path": "data/datasets/eval_mmlu_mmlupro_supergpqa_nemotron_provided.jsonl",
+        "hf_eval_file": "datasets/eval_mmlu_mmlupro_supergpqa_nemotron_provided.jsonl"
+    },
+    "wandb": {
+        "project": "cs552-mnlp-general-knowledge",
+        "entity": "MNLP26",
+        "tags": ["qwen3", "r32", "v12b", "thinking", "nothink-ft"]
+    },
+    "lora": {
+        "adapter_path": "models/qwen3_gk_v12b",
+        "r": 32,
+        "alpha": 64,
+        "dropout": 0.05
+    },
+    "generation": {
+        "base_output_path": "outputs/v12b_thinking_base_generations.jsonl",
+        "base_scores_path": "outputs/v12b_thinking_base_scores.json",
+        "lora_output_path": "outputs/v12b_thinking_lora_generations.jsonl",
+        "lora_scores_path": "outputs/v12b_thinking_lora_scores.json",
+        "max_new_tokens": 16384,
+        "base_max_new_tokens": 16384,
+        "temperature": 0.6,
+        "repetition_penalty": 1.03,
+        "top_p": 0.95,
+        "top_k": 20,
+        "score_generations": true,
+        "log_wandb": false,
+        "do_sample": true
+    },
+    "prompts": {
+        "sft_system_prompt": "You are a careful multiple-choice general-knowledge assistant. Always show your reasoning step by step inside the <think> block before giving the final answer. Keep your reasoning concise and focused. Then finish with exactly one capital letter inside \\boxed{}. Do not answer without explicit reasoning.",
+        "generation_system_prompt": "You are a careful multiple-choice general-knowledge assistant. Always show your reasoning step by step inside the <think> block before giving the final answer. Keep your reasoning concise and focused. Then finish with exactly one capital letter inside \\boxed{}. Do not answer without explicit reasoning."
+    }
+}

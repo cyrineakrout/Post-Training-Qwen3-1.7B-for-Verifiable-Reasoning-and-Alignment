@@ -1,0 +1,162 @@
+{
+  "model": {
+    "base_model": "Qwen/Qwen3-1.7B"
+  },
+  "data": {
+    "languages": [
+      "IT_IT",
+      "ES_LA",
+      "ZH_CN",
+      "HI_IN",
+      "RU_RU"
+    ],
+    "max_per_lang": 600,
+    "seed": 42,
+    "train_file": "multilinguality/data/grpo_train.jsonl",
+    "raw_pool_file": "multilinguality/data/ml_raw_pool.jsonl",
+    "source_limits": {
+      "global_mmlu": 250,
+      "m3exam": 250,
+      "cmmlu": 450,
+      "ceval": 2000,
+      "italic": 2000,
+      "exams": 250,
+      "rummlupro": 2000,
+      "mmlu_hindi": 300,
+      "indic_mmlu": 285,
+      "hindi_mcq": 1500,
+      "kaleidoscope": 600,
+      "head_qa": 400,
+      "aya_es": 400,
+      "medexpqa_es": 400,
+      "exams_bolivia": 300,
+      "peru_exams": 400,
+      "cmb": 1500
+    }
+  },
+  "paths": {
+    "baseline": {
+      "base_model": "Qwen/Qwen3-1.7B"
+    },
+    "distillation": {
+      "lora_dir": "multilinguality/outputs/distillation_lora",
+      "merged_dir": "multilinguality/outputs/distillation_merged"
+    },
+    "sft": {
+      "lora_dir": "multilinguality/outputs/sft_lora",
+      "merged_dir": "multilinguality/outputs/sft_merged"
+    },
+    "distillation_sft": {
+      "lora_dir": "multilinguality/outputs/distillation_sft_lora",
+      "merged_dir": "multilinguality/outputs/distillation_sft_merged"
+    },
+    "cold_grpo": {
+      "lora_dir": "multilinguality/outputs/cold_grpo_lora",
+      "merged_dir": "multilinguality/outputs/cold_grpo_merged"
+    },
+    "sft_grpo": {
+      "lora_dir": "multilinguality/outputs/sft_grpo_lora",
+      "merged_dir": "multilinguality/outputs/sft_grpo_merged"
+    },
+    "distillation_sft_grpo": {
+      "lora_dir": "multilinguality/outputs/distillation_sft_grpo_lora",
+      "merged_dir": "multilinguality/outputs/distillation_sft_grpo_merged"
+    },
+    "simple_sft": {
+      "lora_dir": "multilinguality/outputs/simple_sft_lora",
+      "merged_dir": "multilinguality/outputs/simple_sft_merged"
+    }
+  },
+  "training": {
+    "num_train_epochs": 1,
+    "learning_rate": 1e-05,
+    "batch_size": 2,
+    "gradient_accumulation_steps": 16,
+    "logging_steps": 20,
+    "save_steps": 100,
+    "num_generations": 8,
+    "num_iterations": 1,
+    "max_new_tokens": 4096,
+    "temperature": 1.1,
+    "beta": 0.1
+  },
+  "lora": {
+    "r": 32,
+    "alpha": 64,
+    "dropout": 0.05
+  },
+  "merge": {
+    "generation_temperature": 0.6,
+    "generation_top_p": 0.95,
+    "generation_top_k": 20
+  },
+  "wandb": {
+    "project": "cs552-mnlp-multilinguality-m3",
+    "entity": "MNLP26",
+    "tags": [
+      "grpo",
+      "multilingual",
+      "binary-reward",
+      "qwen3-1.7b"
+    ]
+  },
+  "push": {
+    "repo_id": "cs-552-2026-camykaz/multilingual_model_m3",
+    "mmsellam_repo_id": "mmsellam/multilingual_model"
+  },
+  "hf_model": {
+    "repo": "mmsellam/multilingual_model"
+  },
+  "hf_data": {
+    "train_repo": "mmsellam/multilinguality-m3-data",
+    "eval_repo":  "mmsellam/multilinguality-m3-eval"
+  },
+  "sft": {
+    "train_file": "multilinguality/data/sft_train.jsonl",
+    "max_per_lang_train": 1500,
+    "num_train_epochs": 2,
+    "learning_rate": 5e-05,
+    "batch_size": 2,
+    "gradient_accumulation_steps": 4,
+    "max_length": 4096,
+    "logging_steps": 20,
+    "save_steps": 100
+  },
+  "prompts": {
+    "sft_system": "Answer multiple-choice questions. State the correct option and end with \\boxed{LETTER} where LETTER is the correct option (A, B, C, etc..).",
+    "inference_system": "You are a knowledgeable multilingual assistant. Read the multiple choice question carefully. Guess an answer out of your knowledge in English, then select the correct option that matches best your guess and you think is the most truthful. Your final answer must be a single capital letter inside \\boxed{}, for example \\boxed{A}.",
+    "grpo_only_system": "You are a knowledgeable multilingual assistant. Read the multiple choice question carefully. Guess an answer out of your knowledge in English, then select the correct option that matches best your guess and you think is the most truthful. Your final answer must be a single capital letter inside \\boxed{}, for example \\boxed{A}."
+  },
+  "repo_id": "cs-552-2026-camykaz/multilingual_model_m3",
+  "distillation": {
+    "pool_file":  "multilinguality/data/distillation_pool.jsonl",
+    "train_file": "multilinguality/data/distillation_train.jsonl",
+    "max_per_lang": 600,
+    "num_train_epochs": 1,
+    "learning_rate": 5e-05,
+    "batch_size": 1,
+    "gradient_accumulation_steps": 8,
+    "max_length": 4096,
+    "logging_steps": 20,
+    "save_steps": 100,
+    "source_limits": {
+      "global_mmlu": 80,
+      "m3exam": 120,
+      "cmmlu": 170,
+      "ceval": 400,
+      "italic": 500,
+      "exams": 120,
+      "rummlupro": 600,
+      "mmlu_hindi": 150,
+      "indic_mmlu": 150,
+      "hindi_mcq": 800,
+      "kaleidoscope": 200,
+      "head_qa": 0,
+      "aya_es": 200,
+      "medexpqa_es": 200,
+      "exams_bolivia": 150,
+      "peru_exams": 200,
+      "cmb": 800
+    }
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "merge": {
+    "base_model": "Qwen/Qwen3-1.7B",
+    "output_dir": "models/lora_direct_v1_reproduced",
+    "adapters": {
+      "safety": {
+        "hf_repo": "cs-552-2026-camykaz/group_model_lora_direct_v1",
+        "hf_path": "lora_direct_v1/adapters/safety",
+        "local_path": "adapters/safety",
+        "weight": 0.25
+      },
+      "general_knowledge": {
+        "hf_repo": "cs-552-2026-camykaz/group_model_lora_direct_v1",
+        "hf_path": "lora_direct_v1/adapters/general_knowledge",
+        "local_path": "adapters/general_knowledge",
+        "weight": 0.25
+      },
+      "multilingual": {
+        "hf_repo": "cs-552-2026-camykaz/group_model_lora_direct_v1",
+        "hf_path": "lora_direct_v1/adapters/multilingual",
+        "local_path": "adapters/multilingual",
+        "weight": 0.25
+      },
+      "math": {
+        "hf_repo": "cs-552-2026-camykaz/group_model_lora_direct_v1",
+        "hf_path": "lora_direct_v1/adapters/math",
+        "local_path": "adapters/math",
+        "weight": 0.25
+      }
+    }
+  },
+  "model": {
+    "hf_repo": "cs-552-2026-camykaz/group_model_lora_direct_v1",
+    "hf_subfolder": "lora_direct_v1/group_model",
+    "local_path": "models/group_model"
+  },
+  "data": {
+    "hf_repo": "cs-552-2026-camykaz/group_model_lora_direct_v1",
+    "hf_eval_file": "lora_direct_v1/eval/group_eval.jsonl",
+    "eval_path": "data/group_eval.jsonl"
+  },
+  "generation": {
+    "max_new_tokens": 16384,
+    "do_sample": true,
+    "temperature": 0.6,
+    "top_p": 0.95,
+    "top_k": 20,
+    "repetition_penalty": 1.03
+  }
+}

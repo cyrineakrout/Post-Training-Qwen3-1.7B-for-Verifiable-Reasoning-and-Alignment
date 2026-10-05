@@ -1,0 +1,41 @@
+{
+  "experiment": {
+    "name": "runb_retrain",
+    "description": "Safety-heavy joint SFT Run B retrain",
+    "training": {
+      "base_model": "Qwen/Qwen3-1.7B",
+      "train_examples": 110400,
+      "validation_examples": 1600,
+      "domain_train_counts": {
+        "safety": 44382,
+        "general_knowledge": 34490,
+        "multilingual": 19708,
+        "math": 11820
+      },
+      "lora_r": 64,
+      "lora_alpha": 128,
+      "lora_dropout": 0.05,
+      "learning_rate": 5e-6,
+      "num_epochs": 0.6,
+      "max_seq_len": 2048
+    }
+  },
+  "model": {
+    "hf_repo": "Yassinekouch/mnlp_project_qwen_based_group_model",
+    "hf_subfolder": "",
+    "local_path": "models/group_model_runb_retrain"
+  },
+  "data": {
+    "hf_repo": "cs-552-2026-camykaz/group_model_lora_direct_v1",
+    "hf_eval_file": "lora_direct_v1/eval/group_eval.jsonl",
+    "eval_path": "data/group_eval.jsonl"
+  },
+  "generation": {
+    "max_new_tokens": 4096,
+    "do_sample": true,
+    "temperature": 0.3,
+    "top_p": 0.9,
+    "top_k": 20,
+    "repetition_penalty": 1.05
+  }
+}

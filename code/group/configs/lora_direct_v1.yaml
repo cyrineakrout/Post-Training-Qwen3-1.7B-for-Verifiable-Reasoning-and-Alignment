@@ -1,0 +1,53 @@
+# lora_direct_v1 — weighted delta merge of 4 domain LoRA adapters
+#
+# HuggingFace repo: cs-552-2026-camykaz/group_model_lora_direct_v1
+# Base model: Qwen/Qwen3-1.7B
+#
+# All paths are relative to code/group/
+
+merge:
+  base_model: Qwen/Qwen3-1.7B
+  method: weighted_delta          # manual weighted sum of LoRA deltas
+
+  adapters:
+    safety:
+      hf_repo:    cs-552-2026-camykaz/group_model_lora_direct_v1
+      hf_path:    lora_direct_v1/adapters/safety
+      local_path: adapters/safety
+      weight:     0.25
+
+    general_knowledge:
+      hf_repo:    cs-552-2026-camykaz/group_model_lora_direct_v1
+      hf_path:    lora_direct_v1/adapters/general_knowledge
+      local_path: adapters/general_knowledge
+      weight:     0.25
+
+    multilingual:
+      hf_repo:    cs-552-2026-camykaz/group_model_lora_direct_v1
+      hf_path:    lora_direct_v1/adapters/multilingual
+      local_path: adapters/multilingual
+      weight:     0.25
+
+    math:
+      hf_repo:    cs-552-2026-camykaz/group_model_lora_direct_v1
+      hf_path:    lora_direct_v1/adapters/math
+      local_path: adapters/math
+      weight:     0.25
+
+  output_dir: models/lora_direct_v1_reproduced
+
+eval:
+  eval_file:      data/group_eval.jsonl
+  hf_repo:        cs-552-2026-camykaz/group_model_lora_direct_v1
+  hf_eval_path:   lora_direct_v1/eval/group_eval.jsonl
+  max_new_tokens: 16384
+  do_sample:      true
+  temperature:    0.6
+  top_p:          0.95
+  top_k:          20
+  repetition_penalty: 1.03
+
+# Trained merged model (already available on HF):
+submitted_model:
+  hf_repo:  cs-552-2026-camykaz/group_model_lora_direct_v1
+  hf_path:  lora_direct_v1/group_model

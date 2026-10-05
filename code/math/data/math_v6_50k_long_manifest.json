@@ -1,0 +1,53 @@
+{
+  "dataset": "nvidia/AceReason-1.1-SFT",
+  "seed": 42,
+  "train_output": "math/data/math_v6_50k_long_train.jsonl",
+  "val_output": "math/data/math_v6_50k_long_val.jsonl",
+  "train_written": 50000,
+  "val_written": 1000,
+  "source_train_targets": {
+    "OpenMathReasoning": 34300,
+    "NuminaMath-CoT": 15700
+  },
+  "train_bucket_targets": {
+    "short": 47500,
+    "medium": 2000,
+    "long": 500
+  },
+  "val_bucket_targets": {
+    "medium": 470,
+    "long": 530
+  },
+  "source_counts": {
+    "OpenMathReasoning": 34300,
+    "NuminaMath-CoT": 15700
+  },
+  "bucket_counts": {
+    "medium": 2000,
+    "short": 47500,
+    "long": 500
+  },
+  "val_source_counts": {
+    "OpenMathReasoning": 784,
+    "NuminaMath-CoT": 216
+  },
+  "val_bucket_counts": {
+    "medium": 470,
+    "long": 530
+  },
+  "raw_source_counts_seen": {
+    "OpenMathReasoning": 141152,
+    "NuminaMath-CoT": 34591,
+    "other": 3657
+  },
+  "exclude_hashes": 10,
+  "counts": {
+    "seen": 300551,
+    "no_final_marker": 93813,
+    "too_long": 1290,
+    "non_target_source": 3657,
+    "duplicate_or_excluded": 26002,
+    "not_math": 46,
+    "quota_full": 124743
+  }
+}

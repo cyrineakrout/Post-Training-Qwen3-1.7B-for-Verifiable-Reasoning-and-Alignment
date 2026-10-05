@@ -1,0 +1,66 @@
+{
+  "output": "math/data/math_benchmark_external_v1.jsonl",
+  "seed": 2026,
+  "total": 536,
+  "used": {
+    "course_math": 10,
+    "math500": 200,
+    "aime_validation": 90,
+    "aime_2024": 13,
+    "aime_1983_2024": 194,
+    "aime_2025": 29
+  },
+  "available_after_filter": {
+    "course_math": 10,
+    "math500": 200,
+    "aime_validation": 90,
+    "aime_2024": 30,
+    "aime_1983_2024": 200,
+    "aime_2025": 30
+  },
+  "sources": [
+    {
+      "benchmark_source": "course_math",
+      "dataset": "validation_samples/math.jsonl",
+      "split": null,
+      "target": 10,
+      "is_local": true
+    },
+    {
+      "benchmark_source": "math500",
+      "dataset": "HuggingFaceH4/MATH-500",
+      "split": "test",
+      "target": 200,
+      "is_local": false
+    },
+    {
+      "benchmark_source": "aime_validation",
+      "dataset": "AI-MO/aimo-validation-aime",
+      "split": "train",
+      "target": 100,
+      "is_local": false
+    },
+    {
+      "benchmark_source": "aime_2024",
+      "dataset": "Maxwell-Jia/AIME_2024",
+      "split": "train",
+      "target": 30,
+      "is_local": false
+    },
+    {
+      "benchmark_source": "aime_1983_2024",
+      "dataset": "di-zhang-fdu/AIME_1983_2024",
+      "split": "train",
+      "target": 200,
+      "is_local": false
+    },
+    {
+      "benchmark_source": "aime_2025",
+      "dataset": "yentinglin/aime_2025",
+      "split": "train",
+      "target": 30,
+      "is_local": false
+    }
+  ],
+  "note": "External benchmark-style math evaluation set for checkpoint selection. Do not train on this file."
+}

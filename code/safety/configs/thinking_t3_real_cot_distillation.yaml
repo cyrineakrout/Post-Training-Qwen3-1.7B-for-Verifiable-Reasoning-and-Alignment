@@ -1,0 +1,56 @@
+model:
+  base_model: Qwen/Qwen3-1.7B
+  output_dir: models/thinking_t3_real_cot_distillation
+
+data:
+  train_path: data/combined_v14_thinking_train.jsonl
+  dev_path:   data/combined_v14_thinking_dev.jsonl
+
+training:
+  num_train_epochs: 1
+  learning_rate: 0.000010          # 1e-5 — proven best
+  per_device_train_batch_size: 2
+  gradient_accumulation_steps: 8   # effective batch = 16
+  max_seq_length: 3072             # longer: real CoT traces are 500-2000 tokens
+  warmup_ratio: 0.05
+  weight_decay: 0.01
+  logging_steps: 10
+  save_steps: 200
+  eval_steps: 200
+  seed: 42
+
+lora:
+  r: 16
+  alpha: 32
+  dropout: 0.05
+  target_modules:
+    - q_proj
+    - k_proj
+    - v_proj
+    - o_proj
+    - gate_proj
+    - up_proj
+    - down_proj
+
+generation:
+  max_new_tokens: 2048             # longer budget for real <think> blocks
+  do_sample: false
+
+wandb:
+  project: cs552-safety-model
+  entity: MNLP26
+  run_name: v14-thinking-cot-distill-r16-lr1e5
+  tags:
+    - safety
+    - qwen3-1.7b
+    - lora
+    - v14
+    - thinking-on
+    - cot-distillation
+    - qwen3-14b-teacher
+  notes: >
+    v14: Real CoT distillation from Qwen3-14B teacher (thinking ON).
+    Teacher generates genuine <think>...</think>\boxed{X} traces for all v10 questions.
+    Only keeps examples where teacher answer == gold answer (~85-90% pass rate expected).
+    ~30-35k examples after filtering.
+    This is the approach used by top competitors (momy 89%, thinkinsidethebox 85%).

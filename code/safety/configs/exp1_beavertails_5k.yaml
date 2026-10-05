@@ -1,0 +1,42 @@
+model:
+  base_model: Qwen/Qwen3-1.7B
+  output_dir: models/exp1_beavertails_5k
+
+data:
+  train_path: data/beavertails_v4_noreason_train.jsonl
+  dev_path: data/beavertails_v4_noreason_dev.jsonl
+
+training:
+  num_train_epochs: 1
+  learning_rate: 0.00002
+  per_device_train_batch_size: 1
+  gradient_accumulation_steps: 8
+  max_seq_length: 2048
+  warmup_ratio: 0.03
+  weight_decay: 0.01
+  logging_steps: 10
+  save_steps: 500
+  eval_steps: 500
+  seed: 42
+
+lora:
+  r: 16
+  alpha: 32
+  dropout: 0.05
+  target_modules:
+    - q_proj
+    - k_proj
+    - v_proj
+    - o_proj
+    - gate_proj
+    - up_proj
+    - down_proj
+
+generation:
+  max_new_tokens: 256
+  do_sample: false
+
+wandb:
+  project: cs552-safety-model
+  entity: MNLP26
+  run_name: qwen3-safety-lora-beavertails-v4-noreason-5k

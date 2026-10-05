@@ -1,0 +1,13 @@
+torch
+transformers
+datasets
+accelerate
+peft
+trl
+huggingface_hub
+safetensors
+sentencepiece
+protobuf
+numpy
+tqdm
+vllm

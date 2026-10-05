@@ -1,0 +1,20 @@
+{
+  "model": {
+    "hf_repo": "mmsellam/group_model",
+    "hf_subfolder": "",
+    "local_path": "models/group_model_distillation_grpo"
+  },
+  "data": {
+    "hf_repo": "cs-552-2026-camykaz/group_model_lora_direct_v1",
+    "hf_eval_file": "lora_direct_v1/eval/group_eval.jsonl",
+    "eval_path": "data/group_eval.jsonl"
+  },
+  "generation": {
+    "max_new_tokens": 4096,
+    "do_sample": true,
+    "temperature": 0.6,
+    "top_p": 0.95,
+    "top_k": 20,
+    "repetition_penalty": 1.03
+  }
+}

@@ -1,0 +1,55 @@
+model:
+  base_model: models/qwen3_safety_merged_combined_v5_all
+  output_dir: models/qwen3_safety_dpo_v1
+
+data:
+  train_path: data/safety_dpo_v1.jsonl
+  dev_path:   # leave empty — DPO dev set optional
+
+training:
+  num_train_epochs: 1
+  learning_rate: 0.000005       # 5e-6, conservative — DPO can easily hurt the model
+  per_device_train_batch_size: 1
+  gradient_accumulation_steps: 8
+  effective_batch_size: 8
+  max_seq_length: 2048
+  max_prompt_length: 1536       # safety MCQ prompts can be long
+  warmup_ratio: 0.05
+  weight_decay: 0.01
+  logging_steps: 10
+  save_steps: 200
+  eval_steps: 200
+  seed: 42
+
+dpo:
+  beta: 0.05      # lower than standard — single-token outputs (\boxed{X}) make DPO aggressive
+
+lora:
+  r: 16
+  alpha: 32
+  dropout: 0.05
+  target_modules:
+    - q_proj
+    - k_proj
+    - v_proj
+    - o_proj
+    - gate_proj
+    - up_proj
+    - down_proj
+
+wandb:
+  project: cs552-safety-model
+  entity: MNLP26
+  run_name: v5all-dpo-hardneg-augsiqa-sb-lora
+  tags:
+    - safety
+    - dpo
+    - lora
+    - v5all-base
+  notes: >
+    DPO v1: hard negatives from v5_all wrong predictions on safetybench_10k
+    (~1500-2000 pairs) + augmentation from SIQA (~1000-1500 pairs).
+    Hard negatives dominate — do NOT use clean eval as source (leakage).
+    Base model: qwen3_safety_merged_combined_v5_all.
+    beta=0.05, lr=5e-6, 1 epoch. Conservative — single-token outputs
+    make DPO very aggressive.

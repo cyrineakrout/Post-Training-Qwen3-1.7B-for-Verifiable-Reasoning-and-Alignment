@@ -1,0 +1,74 @@
+{
+    "model": {
+        "base_model": "Qwen/Qwen3-1.7B",
+        "hf_merged_model": "cyrineakrout/gk_all_models_backup",
+        "hf_merged_subfolder": "merged_models/qwen3_gk_mmluaux50k_nemotron50k"
+    },
+    "data": {
+        "hf_dataset_repo": "cyrineakrout/gk_data_backup",
+        "hf_dataset_file": "sft_train_mmluaux50k_nemotron50k_nothink.jsonl",
+        "validation_path": "data/datasets/eval_mmlu_mmlupro_supergpqa_nemotron_provided.jsonl",
+        "hf_eval_file": "datasets/eval_mmlu_mmlupro_supergpqa_nemotron_provided.jsonl"
+    },
+    "training": {
+        "batch_size": 4,
+        "eval_batch_size": 16,
+        "gradient_accumulation_steps": 4,
+        "learning_rate": 5e-05,
+        "num_train_epochs": 1,
+        "warmup_ratio": 0.05,
+        "max_grad_norm": 1.0,
+        "logging_steps": 10,
+        "save_steps": 1000,
+        "eval_strategy": "no",
+        "max_length": 2048,
+        "train_file": "data/datasets/sft_train_mmluaux50k_nemotron50k_nothink.jsonl",
+        "eval_file": "data/datasets/eval_mmlu_mmlupro_supergpqa_nemotron_provided.jsonl",
+        "output_dir": "models/qwen3_gk_a3_sft",
+        "run_name": "gk-mmluaux50k-nemotron50k-r32-lr5e5-ep1",
+        "final_eval_enabled": false,
+        "final_eval_file": "data/datasets/eval_mmlu_mmlupro_supergpqa_nemotron_provided.jsonl",
+        "final_eval_max_examples": null,
+        "final_eval_generations_path": "outputs/a3_sft_train_generations.jsonl",
+        "final_eval_scores_path": "outputs/a3_sft_train_scores.json",
+        "seed": 42,
+        "enable_thinking": false
+    },
+    "wandb": {
+        "project": "cs552-mnlp-general-knowledge",
+        "entity": "MNLP26",
+        "tags": [
+            "qwen3",
+            "r32",
+            "a3",
+            "sft",
+            "nothink",
+            "mmluaux50k",
+            "nemotron50k"
+        ]
+    },
+    "lora": {
+        "adapter_path": "models/qwen3_gk_a3_sft",
+        "r": 32,
+        "alpha": 64,
+        "dropout": 0.0
+    },
+    "generation": {
+        "base_output_path": "outputs/a3_sft_base_generations.jsonl",
+        "base_scores_path": "outputs/a3_sft_base_scores.json",
+        "lora_output_path": "outputs/a3_sft_lora_generations.jsonl",
+        "lora_scores_path": "outputs/a3_sft_lora_scores.json",
+        "max_new_tokens": 32,
+        "base_max_new_tokens": 32,
+        "temperature": 0.0,
+        "top_p": 0.95,
+        "top_k": 20,
+        "score_generations": true,
+        "log_wandb": false,
+        "do_sample": false
+    },
+    "prompts": {
+        "sft_system_prompt": "Select the single best answer. Respond with exactly one capital letter inside \\boxed{} and nothing else. No explanation, no option text, no extra words. Output only the boxed letter, for example \\boxed{B}. /no_think",
+        "generation_system_prompt": "Select the single best answer. Respond with exactly one capital letter inside \\boxed{} and nothing else. No explanation, no option text, no extra words. Output only the boxed letter, for example \\boxed{B}. /no_think"
+    }
+}

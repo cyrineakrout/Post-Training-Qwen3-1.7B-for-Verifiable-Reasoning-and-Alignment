@@ -1,0 +1,57 @@
+model:
+  base_model: Qwen/Qwen3-1.7B
+  output_dir: models/exp3_clean_mix_32k_best
+
+data:
+  train_path: data/exp3_clean_mix_train.jsonl
+  dev_path:   data/exp3_clean_mix_dev.jsonl
+
+training:
+  num_train_epochs: 1
+  learning_rate: 0.000010          # 1e-5 — same as v5_all best run
+  per_device_train_batch_size: 1
+  gradient_accumulation_steps: 16  # effective batch = 16
+  max_seq_length: 2048
+  warmup_ratio: 0.05
+  weight_decay: 0.01
+  logging_steps: 10
+  save_steps: 200
+  eval_steps: 200
+  seed: 42
+
+lora:
+  r: 16
+  alpha: 32
+  dropout: 0.05
+  target_modules:
+    - q_proj
+    - k_proj
+    - v_proj
+    - o_proj
+    - gate_proj
+    - up_proj
+    - down_proj
+
+generation:
+  max_new_tokens: 128
+  do_sample: false
+
+wandb:
+  project: cs552-safety-model
+  entity: MNLP26
+  run_name: v10-nosb-bbq-salad-39k-r16-lr1e5
+  tags:
+    - safety
+    - qwen3-1.7b
+    - lora
+    - combined-v10-nosb
+    - no-safetybench
+    - bbq
+    - salad
+    - 39k-train
+  notes: >
+    v10: replaces SafetyBench (10,928 examples) with BBQ (8k, bias/fairness MCQ)
+    + SALAD (8k, harmful-content MCQ). All other v5_all sources kept unchanged.
+    Hypothesis: more diverse safety coverage without eval-set overlap.
+    SALAD increased to 8k (from 5k) to better cover direct harm categories
+    (violence, drugs, illegal content) that SafetyBench covered.

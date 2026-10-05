@@ -1,0 +1,14 @@
+{
+  "model_repo": "Yassinekouch/mnlp_project_qwen_based_math_model",
+  "dataset_repo": "cs-552-2026-camykaz/math_model",
+  "experiments": {
+    "v1": {"description": "Early GSM8K SFT", "hf_subfolder": "v1", "train_script": "math/scripts/v1_early_sft/train_math_v1_early_sft.py", "merge_script": "math/scripts/v1_early_sft/merge_math_v1_early_sft.py", "eval_max_tokens": 2048, "eval_max_model_len": 8192},
+    "v2": {"description": "Revised GSM8K + MATH SFT", "hf_subfolder": "v2", "train_script": "math/scripts/v2_revised_sft/train_math_v2_revised_sft.py", "merge_script": "math/scripts/v2_revised_sft/merge_math_v2_revised_sft.py", "eval_max_tokens": 2048, "eval_max_model_len": 8192},
+    "v3": {"description": "Curated competition-math SFT", "hf_subfolder": "v3", "train_script": "math/scripts/v3_curated_sft/train_math_v3_curated_sft.py", "merge_script": "math/scripts/v3_curated_sft/merge_math_v3_curated_sft.py", "eval_max_tokens": 2048, "eval_max_model_len": 8192},
+    "v4_strong_sft": {"description": "Strong thinking-format SFT", "hf_subfolder": "v4_strong_sft", "train_script": "math/scripts/v4_strong_sft/train_math_v4_strong_sft.py", "merge_script": "math/scripts/v4_strong_sft/merge_math_v4_strong_sft.py", "eval_max_tokens": 4096, "eval_max_model_len": 16384},
+    "v4_grpo": {"description": "GRPO continuation of v4 strong SFT", "hf_subfolder": "v4_grpo", "train_script": "math/scripts/v4_strong_sft/train_math_v4_grpo_ref.py", "merge_script": "math/scripts/v4_strong_sft/merge_math_v4_grpo_ref.py", "eval_max_tokens": 4096, "eval_max_model_len": 16384},
+    "v5": {"description": "All-solutions-focused SFT", "hf_subfolder": "v5", "train_script": "math/scripts/v5_all_solutions_sft/train_math_v5_all_solutions_sft.py", "merge_script": "math/scripts/v5_all_solutions_sft/merge_math_v5_all_solutions_sft.py", "eval_max_tokens": 4096, "eval_max_model_len": 16384},
+    "v6": {"description": "50k long-context model, checkpoint 1500", "hf_subfolder": "v6", "train_script": "math/scripts/v6_50k_long/train_math_v6_50k_long_lora_sft.py", "merge_script": "math/scripts/v6_50k_long/merge_math_v6_50k_long_checkpoint.py", "eval_max_tokens": 12000, "eval_max_model_len": 40960},
+    "v7": {"description": "Primary 100k long-context model, checkpoint 2400", "hf_subfolder": "v7", "train_script": "math/scripts/v7_100k/train_math_v7_100k_lora_sft.py", "merge_script": "math/scripts/v7_100k/merge_math_v7_100k_checkpoint.py", "eval_max_tokens": 16384, "eval_max_model_len": 40960}
+  }
+}

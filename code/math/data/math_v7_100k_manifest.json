@@ -1,0 +1,65 @@
+{
+  "dataset": "nvidia/AceReason-1.1-SFT",
+  "version": "math_v7_100k",
+  "seed": 42,
+  "train_output": "math/data/math_v7_100k_train.jsonl",
+  "val_output": "math/data/math_v7_100k_val.jsonl",
+  "train_written": 100000,
+  "val_written": 5000,
+  "train_source_targets": {
+    "OpenMathReasoning": 75000,
+    "NuminaMath-CoT": 25000
+  },
+  "train_bucket_targets": {
+    "short": 65000,
+    "medium": 27000,
+    "long": 8000
+  },
+  "val_source_targets": {
+    "OpenMathReasoning": 3750,
+    "NuminaMath-CoT": 1250
+  },
+  "val_bucket_targets": {
+    "short": 1500,
+    "medium": 1750,
+    "long": 1750
+  },
+  "train_source_counts": {
+    "NuminaMath-CoT": 25000,
+    "OpenMathReasoning": 75000
+  },
+  "train_bucket_counts": {
+    "short": 65000,
+    "medium": 27000,
+    "long": 8000
+  },
+  "val_source_counts": {
+    "OpenMathReasoning": 3750,
+    "NuminaMath-CoT": 1250
+  },
+  "val_bucket_counts": {
+    "medium": 1750,
+    "short": 1500,
+    "long": 1750
+  },
+  "raw_seen_source": {
+    "OpenMathReasoning": 190919,
+    "other": 163911,
+    "NuminaMath-CoT": 50773
+  },
+  "raw_seen_bucket": {
+    "medium": 108697,
+    "short": 77773,
+    "long": 44231
+  },
+  "exclude_hashes": 10,
+  "counts": {
+    "seen": 499690,
+    "non_target_source": 163911,
+    "not_math_like": 10991,
+    "duplicate_or_excluded": 94087,
+    "too_long": 72,
+    "quota_full_or_not_matching": 125629
+  },
+  "note": "Neutral filenames are used, but this manifest records the real sampling choices for reproducibility."
+}

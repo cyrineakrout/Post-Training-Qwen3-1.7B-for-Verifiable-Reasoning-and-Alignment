@@ -1,0 +1,83 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# macOS
+.DS_Store
+
+# Environments
+.env
+.venv/
+venv/
+env/
+conda/
+docker/*
+
+# Jupyter
+.ipynb_checkpoints/
+echo ".claude/" 
+
+# Logs
+*.log
+wandb/
+runs/
+tensorboard/
+
+
+#other artifacts
+**.pdf
+best_preformers/
+
+
+# Model outputs / checkpoints
+checkpoint-*/
+**/checkpoint-*/
+
+# Large model files
+*.safetensors
+*.bin
+*.pt
+*.pth
+*.ckpt
+
+# Editor
+.vscode/
+
+# General Knowledge files
+general_knowledge/models/
+general_knowledge/outputs/
+general_knowledge/data/
+general_knowledge/merged_models
+
+general_knowledge/data/sft_train_*.jsonl
+general_knowledge/data/sft_val_*.jsonl
+general_knowledge/eval_results
+group/data
+
+
+# safety files 
+safety/models/
+safety/outputs/
+group/adapters
+safety/data/*.jsonl
+group/outputs/*
+validation_samples/*
+group/models
+group/data
+
+# math outputs / checkpoints
+math/outputs/*
+!math/outputs/.gitkeep
+
+math/data/*.jsonl
+
+
+# Multilinguality files
+multilinguality/data/*.jsonl
+multilinguality/outputs/*
+multilinguality/logs/*
+!multilinguality/outputs/.gitkeepcleanup_backup_math/

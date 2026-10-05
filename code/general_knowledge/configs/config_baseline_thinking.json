@@ -1,0 +1,40 @@
+{
+    "model": {
+        "base_model": "Qwen/Qwen3-1.7B",
+        "inject_system_prompt": true
+    },
+    "data": {
+        "validation_path": "data/datasets/eval_mmlu_mmlupro_supergpqa_nemotron_provided.jsonl",
+        "hf_dataset_repo": "cyrineakrout/gk-models",
+        "hf_eval_file": "datasets/eval_mmlu_mmlupro_supergpqa_nemotron_provided.jsonl"
+    },
+    "wandb": {
+        "project": "cs552-mnlp-general-knowledge",
+        "entity": "MNLP26",
+        "tags": ["qwen3", "baseline", "thinking", "no-finetune"]
+    },
+    "lora": {
+        "adapter_path": "",
+        "r": 32,
+        "alpha": 64,
+        "dropout": 0.05
+    },
+    "generation": {
+        "base_output_path": "outputs/baseline_thinking_generations.jsonl",
+        "base_scores_path": "outputs/baseline_thinking_scores.json",
+        "lora_output_path": "outputs/baseline_thinking_lora_generations.jsonl",
+        "lora_scores_path": "outputs/baseline_thinking_lora_scores.json",
+        "max_new_tokens": 4096,
+        "base_max_new_tokens": 4096,
+        "temperature": 0.6,
+        "top_p": 0.95,
+        "top_k": 20,
+        "score_generations": true,
+        "log_wandb": false,
+        "do_sample": true
+    },
+    "prompts": {
+        "sft_system_prompt": "Think carefully, then respond with exactly one capital letter inside \\boxed{}.",
+        "generation_system_prompt": "Think carefully, then respond with exactly one capital letter inside \\boxed{}."
+    }
+}

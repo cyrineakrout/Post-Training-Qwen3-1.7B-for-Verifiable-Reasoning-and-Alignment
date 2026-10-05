@@ -1,0 +1,57 @@
+model:
+  base_model: Qwen/Qwen3-1.7B
+  output_dir: models/exp2_bt_siqa_ethics_civil_10k
+
+data:
+  train_path: data/exp2_bt_siqa_ethics_civil_train.jsonl
+  dev_path: data/exp2_bt_siqa_ethics_civil_dev.jsonl
+
+training:
+  num_train_epochs: 1
+  learning_rate: 0.00002
+  per_device_train_batch_size: 1
+  gradient_accumulation_steps: 8
+  effective_batch_size: 8
+  max_seq_length: 2048
+  warmup_ratio: 0.03
+  weight_decay: 0.01
+  logging_steps: 10
+  save_steps: 500
+  eval_steps: 500
+  seed: 42
+  expected_train_size: 10000
+  expected_dev_size: 500
+  expected_optimizer_steps: 1250
+
+lora:
+  r: 16
+  alpha: 32
+  dropout: 0.05
+  target_modules:
+    - q_proj
+    - k_proj
+    - v_proj
+    - o_proj
+    - gate_proj
+    - up_proj
+    - down_proj
+
+generation:
+  max_new_tokens: 128
+  do_sample: false
+
+wandb:
+  project: cs552-safety-model
+  entity: MNLP26
+  run_name: qwen3-safety-lora-combined-v2-noreason-10k
+  tags:
+    - safety
+    - qwen3-1.7b
+    - lora
+    - combined-v2
+    - no-reasoning
+    - 10k
+  notes: >
+    Combined v2 no-reasoning run. Training targets are only
+    Final answer: \boxed{X}. Mix intended to combine BeaverTails v4
+    no-reasoning with mixed safety no-reasoning data.

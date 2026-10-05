@@ -1,0 +1,74 @@
+{
+    "model": {
+        "base_model": "Qwen/Qwen3-1.7B",
+        "hf_merged_model": "cyrineakrout/gk-models",
+        "hf_merged_subfolder": "models/qwen3_gk_v10"
+    },
+    "data": {
+        "hf_dataset_repo": "cyrineakrout/gk-models",
+        "hf_dataset_file": "datasets/sft_train_v10.jsonl",
+        "validation_path": "data/datasets/eval_mmlu_mmlupro_supergpqa_nemotron_provided.jsonl",
+        "hf_eval_file": "datasets/eval_mmlu_mmlupro_supergpqa_nemotron_provided.jsonl"
+    },
+    "training": {
+        "batch_size": 4,
+        "eval_batch_size": 16,
+        "gradient_accumulation_steps": 4,
+        "learning_rate": 5e-05,
+        "num_train_epochs": 1,
+        "warmup_ratio": 0.05,
+        "max_grad_norm": 1.0,
+        "logging_steps": 10,
+        "save_steps": 500,
+        "eval_strategy": "no",
+        "max_length": 2048,
+        "train_file": "data/datasets/sft_train_v10.jsonl",
+        "eval_file": "data/datasets/eval_mmlu_mmlupro_supergpqa_nemotron_provided.jsonl",
+        "output_dir": "models/qwen3_gk_v10",
+        "run_name": "qwen3_gk_v10_mmluaux39k_gpqa1.6k_cot",
+        "final_eval_enabled": false,
+        "final_eval_file": "data/datasets/eval_mmlu_mmlupro_supergpqa_nemotron_provided.jsonl",
+        "final_eval_max_examples": null,
+        "final_eval_generations_path": "outputs/v10_train_generations.jsonl",
+        "final_eval_scores_path": "outputs/v10_train_scores.json",
+        "seed": 42,
+        "enable_thinking": true
+    },
+    "wandb": {
+        "project": "cs552-mnlp-general-knowledge",
+        "entity": "MNLP26",
+        "tags": [
+            "qwen3",
+            "r32",
+            "v10",
+            "cot",
+            "mmluaux39k",
+            "gpqa1.6k"
+        ]
+    },
+    "lora": {
+        "adapter_path": "models/qwen3_gk_v10",
+        "r": 32,
+        "alpha": 64,
+        "dropout": 0.05
+    },
+    "generation": {
+        "base_output_path": "outputs/v10_base_generations.jsonl",
+        "base_scores_path": "outputs/v10_base_scores.json",
+        "lora_output_path": "outputs/v10_lora_generations.jsonl",
+        "lora_scores_path": "outputs/v10_lora_scores.json",
+        "max_new_tokens": 16384,
+        "base_max_new_tokens": 16384,
+        "temperature": 0.7,
+        "repetition_penalty": 1.03,
+        "top_p": 0.95,
+        "top_k": 20,
+        "score_generations": true,
+        "log_wandb": false,
+        "do_sample": true
+    },
+    "prompts": {
+        "sft_system_prompt": "You are a careful multiple-choice general-knowledge assistant. Always show your reasoning step by step inside the <think> block before giving the final answer. Keep your reasoning concise and focused. Then finish with exactly one capital letter inside \\boxed{}. Do not answer without explicit reasoning.",
+        "generation_system_prompt": "You are a careful multiple-choice general-knowledge assistant. Always show your reasoning step by step inside the <think> block before giving the final answer. Keep your reasoning concise and focused. Then finish with exactly one capital letter inside \\boxed{}. Do not answer without explicit reasoning."
+    }
+}

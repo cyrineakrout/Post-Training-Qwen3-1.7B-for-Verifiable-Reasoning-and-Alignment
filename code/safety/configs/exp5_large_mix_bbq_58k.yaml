@@ -1,0 +1,56 @@
+model:
+  base_model: Qwen/Qwen3-1.7B
+  output_dir: models/exp5_large_mix_bbq_58k
+
+data:
+  train_path: data/exp4_large_mix_train.jsonl
+  dev_path:   data/combined_v12_dev.jsonl
+
+training:
+  num_train_epochs: 1
+  learning_rate: 0.000010          # 1e-5 — proven best (v5_all, v10)
+  per_device_train_batch_size: 2   # doubled vs v10 for better GPU utilisation
+  gradient_accumulation_steps: 8   # effective batch = 16 (same as v10)
+  max_seq_length: 2048
+  warmup_ratio: 0.05
+  weight_decay: 0.01
+  logging_steps: 10
+  save_steps: 200
+  eval_steps: 200
+  seed: 42
+
+lora:
+  r: 16
+  alpha: 32
+  dropout: 0.05
+  target_modules:
+    - q_proj
+    - k_proj
+    - v_proj
+    - o_proj
+    - gate_proj
+    - up_proj
+    - down_proj
+
+generation:
+  max_new_tokens: 128
+  do_sample: false
+
+wandb:
+  project: cs552-safety-model
+  entity: MNLP26
+  run_name: v12-all-62k-r16-lr1e5
+  tags:
+    - safety
+    - qwen3-1.7b
+    - lora
+    - combined-v12
+    - no-safetybench
+    - all-sources-scaled
+    - 62k-train
+  notes: >
+    v12: scales up ALL sources vs v10's 39k.
+    BeaverTails 5.5k→12k, HH-RLHF 5k→8k, SIQA 5k→8k, ETHICS 3k→6k,
+    Civil 4.6k→7k, BBQ 8k→20k, SALAD ~947 (unchanged, at max).
+    Total ~62k train examples. Effective batch=16 (batch=2, grad_accum=8).
+    Hypothesis: more diverse, larger dataset improves CI score beyond v10's 84%.
